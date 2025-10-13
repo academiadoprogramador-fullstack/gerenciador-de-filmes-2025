@@ -97,12 +97,15 @@
 }
 
 // Listagem
-.app-banner-busca {
+.app-banner-principal {
   background-size: cover;
   background-repeat: no-repeat;
-  background-image:
-    linear-gradient(to right, rgba(109, 43, 194, 0.95) 0%, rgba(255, 236, 212, 0.4) 100%),
-    url('https://media.themoviedb.org/t/p/w1920_and_h600_multi_faces_filter(duotone,00192f,00baff)/ctxm191q5o3axFzQsvNPlbKoSYv.jpg');
+  background-image: linear-gradient(
+      to right,
+      rgba(109, 43, 194, 0.95) 0%,
+      rgba(255, 236, 212, 0.4) 100%
+    ),
+    url('/background-home.webp');
 }
 
 .app-container-principal {
