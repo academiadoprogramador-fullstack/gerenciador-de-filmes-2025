@@ -29,8 +29,7 @@
 // Geral
 .app-scrollbar-customizado {
   &::-webkit-scrollbar {
-    width: 5px;
-    height: 7px;
+    height: 8px;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -41,8 +40,6 @@
   &::-webkit-scrollbar-track {
     background-color: #dddddd;
     border-radius: 5px;
-
-    transition: 300ms all ease-in-out;
 
     &:hover {
       background-color: #cfcfcf;
