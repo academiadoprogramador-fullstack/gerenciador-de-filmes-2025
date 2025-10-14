@@ -1,0 +1,75 @@
+<app-banner-principal></app-banner-principal>
+
+<div class="container py-4">
+  <!-- Mídias Populares -->
+  @if (midiasPopulares$ | async; as midiasPopulares) {
+  <div class="d-flex align-items-center gap-3">
+    <h2 class="fs-4 mb-0">Populares</h2>
+
+    <div class="btn-group rounded-pill overflow-hidden" role="group">
+      <input
+        (change)="midiasPopularesSubject$.next(tipoMidia.Filme)"
+        checked="true"
+        type="radio"
+        class="btn-check"
+        name="tipoMidiasPopulares"
+        id="radioMidiasPopularesFilmes"
+      />
+      <label for="radioMidiasPopularesFilmes" class="btn btn-sm btn-outline-primary border-0"
+        >Filmes</label
+      >
+
+      <input
+        (change)="midiasPopularesSubject$.next(tipoMidia.Tv)"
+        type="radio"
+        class="btn-check"
+        name="tipoMidiasPopulares"
+        id="radioMidiasPopularesTv"
+      />
+      <label for="radioMidiasPopularesTv" class="btn btn-sm btn-outline-primary border-0">TV</label>
+    </div>
+  </div>
+
+  <app-carrossel-midias [midias]="midiasPopulares.results"></app-carrossel-midias>
+  }
+
+  <!-- Mídias Mais Votadas -->
+  @if (midiasMaisVotadas$ | async; as midiasMaisVotadas) {
+  <div class="d-flex align-items-center gap-3 mt-4">
+    <h2 class="fs-4 mb-0">Mais Votados</h2>
+
+    <div class="btn-group rounded-pill overflow-hidden" role="group">
+      <input
+        (change)="midiasMaisVotadasSubject$.next(tipoMidia.Filme)"
+        checked="true"
+        type="radio"
+        class="btn-check"
+        name="tipoMidiasMaisVotadas"
+        id="radioMidiasMaisVotadasFilmes"
+      />
+      <label for="radioMidiasMaisVotadasFilmes" class="btn btn-sm btn-outline-primary border-0"
+        >Filmes</label
+      >
+
+      <input
+        (change)="midiasMaisVotadasSubject$.next(tipoMidia.Tv)"
+        type="radio"
+        class="btn-check"
+        name="tipoMidiasMaisVotadas"
+        id="radioMidiasMaisVotadasTv"
+      />
+      <label for="radioMidiasMaisVotadasTv" class="btn btn-sm btn-outline-primary border-0"
+        >TV</label
+      >
+    </div>
+  </div>
+
+  <app-carrossel-midias [midias]="midiasMaisVotadas.results"></app-carrossel-midias>
+  }
+
+  <!-- Filmes em Cartaz -->
+  @if (filmesEmCartaz$ | async; as filmesEmCartaz) {
+  <h2 class="fs-4 mb-0 mt-4">Filmes em Cartaz</h2>
+  <app-carrossel-midias [midias]="filmesEmCartaz.results"></app-carrossel-midias>
+  }
+</div>
