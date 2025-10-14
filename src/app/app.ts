@@ -5,12 +5,13 @@ import { Component, inject } from '@angular/core';
 
 import { BannerPrincipal } from './components/banner-principal/banner-principal';
 import { Navbar } from './components/navbar/navbar';
+import { CarrosselMidias } from './components/shared/carrossel-midias/carrossel-midias';
 import { TipoMidia } from './models/tipo-midia';
 import { MidiaService } from './services/midia-service';
 
 @Component({
   selector: 'app-root',
-  imports: [AsyncPipe, Navbar, BannerPrincipal],
+  imports: [AsyncPipe, Navbar, BannerPrincipal, CarrosselMidias],
   templateUrl: './app.html',
 })
 export class App {

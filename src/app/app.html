@@ -3,6 +3,8 @@
 <app-banner-principal></app-banner-principal>
 
 <div class="container py-4">
+  <!-- Mídias Populares -->
+  @if (midiasPopulares$ | async; as midiasPopulares) {
   <div class="d-flex align-items-center gap-3">
     <h2 class="fs-4 mb-0">Populares</h2>
 
@@ -30,28 +32,11 @@
     </div>
   </div>
 
-  <div class="row flex-nowrap overflow-x-scroll g-3 mt-1 px-1 app-scrollbar-customizado">
-    @for (midia of (midiasPopulares$ | async)?.results; track midia.id) {
-    <div class="col-7 col-lg-3 col-xl-2">
-      <div class="card rounded-3 app-card-filme">
-        <img
-          class="card-img-top rounded-3"
-          style="min-height: 230px"
-          [src]="midia.poster_path"
-          [alt]="midia.title ?? midia.name"
-        />
-      </div>
+  <app-carrossel-midias [midias]="midiasPopulares.results"></app-carrossel-midias>
+  }
 
-      <div class="mt-2">
-        <small class="text-muted">{{ midia.release_date ?? midia.first_air_date }}</small>
-        <p class="app-titulo-card fw-bold">
-          {{ (midia.title ?? midia.name)?.slice(0, 30) }}
-        </p>
-      </div>
-    </div>
-    }
-  </div>
-
+  <!-- Mídias Mais Votadas -->
+  @if (midiasMaisVotadas$ | async; as midiasMaisVotadas) {
   <div class="d-flex align-items-center gap-3 mt-4">
     <h2 class="fs-4 mb-0">Mais Votados</h2>
 
@@ -81,49 +66,12 @@
     </div>
   </div>
 
-  <div class="row flex-nowrap overflow-x-scroll g-3 mt-1 px-1 app-scrollbar-customizado">
-    @for (midia of (midiasMaisVotadas$ | async)?.results; track midia.id) {
-    <div class="col-7 col-lg-3 col-xl-2">
-      <div class="card rounded-3 app-card-filme">
-        <img
-          class="card-img-top rounded-3"
-          style="min-height: 230px"
-          [src]="midia.poster_path"
-          [alt]="midia.title ?? midia.name"
-        />
-      </div>
+  <app-carrossel-midias [midias]="midiasMaisVotadas.results"></app-carrossel-midias>
+  }
 
-      <div class="mt-2">
-        <small class="text-muted">{{ midia.release_date ?? midia.first_air_date }}</small>
-        <p class="app-titulo-card fw-bold">
-          {{ (midia.title ?? midia.name)?.slice(0, 30) }}
-        </p>
-      </div>
-    </div>
-    }
-  </div>
-
+  <!-- Filmes em Cartaz -->
+  @if (filmesEmCartaz$ | async; as filmesEmCartaz) {
   <h2 class="fs-4 mb-0 mt-4">Filmes em Cartaz</h2>
-
-  <div class="row flex-nowrap overflow-x-scroll g-3 mt-1 px-1 app-scrollbar-customizado">
-    @for (midia of (filmesEmCartaz$ | async)?.results; track midia.id) {
-    <div class="col-7 col-lg-3 col-xl-2">
-      <div class="card rounded-3 app-card-filme">
-        <img
-          class="card-img-top rounded-3"
-          style="min-height: 230px"
-          [src]="midia.poster_path"
-          [alt]="midia.title ?? midia.name"
-        />
-      </div>
-
-      <div class="mt-2">
-        <small class="text-muted">{{ midia.release_date ?? midia.first_air_date }}</small>
-        <p class="app-titulo-card fw-bold">
-          {{ (midia.title ?? midia.name)?.slice(0, 30) }}
-        </p>
-      </div>
-    </div>
-    }
-  </div>
+  <app-carrossel-midias [midias]="filmesEmCartaz.results"></app-carrossel-midias>
+  }
 </div>

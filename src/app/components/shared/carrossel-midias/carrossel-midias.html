@@ -1,0 +1,21 @@
+<div class="row flex-nowrap overflow-x-scroll g-3 mt-1 px-1 app-scrollbar-customizado">
+  @for (midia of midias; track midia.id) {
+  <div class="col-7 col-lg-3 col-xl-2">
+    <div class="card rounded-3 app-card-filme">
+      <img
+        class="card-img-top rounded-3"
+        style="min-height: 230px"
+        [src]="midia.poster_path"
+        [alt]="midia.title ?? midia.name"
+      />
+    </div>
+
+    <div class="mt-2">
+      <small class="text-muted">{{ midia.release_date ?? midia.first_air_date }}</small>
+      <p class="app-titulo-card fw-bold">
+        {{ (midia.title ?? midia.name)?.slice(0, 30) }}
+      </p>
+    </div>
+  </div>
+  }
+</div>
