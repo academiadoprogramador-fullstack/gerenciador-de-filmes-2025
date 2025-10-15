@@ -19,11 +19,9 @@ export class DetalhesMidia {
   protected readonly detalhes$ = this.route.paramMap.pipe(
     filter((params) => params.get('tipoMidia') !== null && params.get('idMidia') !== null),
     map((params) => {
-      const idMidia = params.get('idMidia')!;
-
       return {
         tipoMidia: params.get('tipoMidia') as TipoMidia,
-        idMidia: parseInt(idMidia),
+        idMidia: parseInt(params.get('idMidia')!),
       };
     }),
     switchMap((params) =>
