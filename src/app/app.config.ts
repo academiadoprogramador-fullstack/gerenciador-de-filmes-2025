@@ -12,6 +12,11 @@ export const routes: Routes = [
     path: 'inicio',
     loadComponent: () => import('./components/inicio/inicio').then((c) => c.Inicio),
   },
+  {
+    path: ':tipoMidia/:idMidia/detalhes', // filme / tv = /tv/12345/detalhes /filme/3245/detalhes
+    loadComponent: () =>
+      import('./components/detalhes-midia/detalhes-midia').then((c) => c.DetalhesMidia),
+  },
 ];
 
 export const appConfig: ApplicationConfig = {

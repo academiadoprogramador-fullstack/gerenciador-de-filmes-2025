@@ -1,0 +1,50 @@
+@if (detalhes$ | async; as detalhes) {
+<div class="app-banner-fundo" [style.background-image]="'url(' + detalhes.backdrop_path + ')'">
+  <div class="app-overlay-banner">
+    <main class="container py-5">
+      <section aria-label="Detalhes do Filme" class="row justify-content-center g-5">
+        <div class="col-lg-3">
+          <img
+            [src]="detalhes.poster_path"
+            alt="Poster de {{ detalhes.title ?? detalhes.name }}"
+            class="img-fluid rounded-3"
+          />
+        </div>
+        <div class="col">
+          <header class="d-flex flex-wrap justify-content-between align-items-top gap-3">
+            <div>
+              <h1 class="mb-0">{{ detalhes.title ?? detalhes.name }}</h1>
+
+              <div class="d-flex flex-wrap align-items-center gap-3 fs-5">
+                <small>{{ detalhes.release_date ?? detalhes.first_air_date }}</small>
+
+                <span class="d-flex align-items-center gap-2">
+                  @for (genre of detalhes.genres; track genre.id) { •
+                  <small class="fw-semibold">{{ genre.name }}</small>
+                  }
+                </span>
+              </div>
+            </div>
+          </header>
+
+          <article class="mt-4">
+            <h3>Sinopse</h3>
+
+            <p class="fs-5">{{ detalhes.overview }}</p>
+          </article>
+        </div>
+      </section>
+
+      @if ((videos$ | async)?.results; as videos) {
+      <section class="mt-5">
+        <h3>Trailer</h3>
+
+        <div class="ratio ratio-16x9 mt-4">
+          <iframe [src]="videos.at(0)?.key" frameborder="0"></iframe>
+        </div>
+      </section>
+      }
+    </main>
+  </div>
+</div>
+}

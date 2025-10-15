@@ -1,16 +1,8 @@
 import { TipoMidia } from './tipo-midia';
 
-export interface MidiaApiResponse {
-  type: TipoMidia;
-  page: number;
-  results: Midia[];
-  total_pages: number;
-  total_results: number;
-}
-
-// Representa tanto Filme quanto Série
-export interface Midia {
+export interface DetalhesMidia {
   id: number;
+  type: TipoMidia;
   adult: boolean;
   original_language: string;
   original_title: string;
@@ -25,5 +17,9 @@ export interface Midia {
   video: boolean;
   vote_average: number;
   vote_count: number;
-  genre_ids: number[];
+  budget: number;
+  revenue: number;
+  homepage: string;
+  genres: { id: number; name: string }[];
+  production_companies: { id: number; logo_path: string; name: string; origin_country: string }[];
 }

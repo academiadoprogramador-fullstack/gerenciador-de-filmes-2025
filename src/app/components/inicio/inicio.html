@@ -2,7 +2,7 @@
 
 <div class="container py-4">
   <!-- Mídias Populares -->
-  @if (midiasPopulares$ | async; as midiasPopulares) {
+  @if (midiasPopulares$ | async; as respostMidiasPopulares) {
   <div class="d-flex align-items-center gap-3">
     <h2 class="fs-4 mb-0">Populares</h2>
 
@@ -30,11 +30,14 @@
     </div>
   </div>
 
-  <app-carrossel-midias [midias]="midiasPopulares.results"></app-carrossel-midias>
+  <app-carrossel-midias
+    [tipoMidia]="respostMidiasPopulares.type"
+    [midias]="respostMidiasPopulares.results"
+  ></app-carrossel-midias>
   }
 
   <!-- Mídias Mais Votadas -->
-  @if (midiasMaisVotadas$ | async; as midiasMaisVotadas) {
+  @if (midiasMaisVotadas$ | async; as respostaMidiasMaisVotadas) {
   <div class="d-flex align-items-center gap-3 mt-4">
     <h2 class="fs-4 mb-0">Mais Votados</h2>
 
@@ -64,12 +67,18 @@
     </div>
   </div>
 
-  <app-carrossel-midias [midias]="midiasMaisVotadas.results"></app-carrossel-midias>
+  <app-carrossel-midias
+    [tipoMidia]="respostaMidiasMaisVotadas.type"
+    [midias]="respostaMidiasMaisVotadas.results"
+  ></app-carrossel-midias>
   }
 
   <!-- Filmes em Cartaz -->
   @if (filmesEmCartaz$ | async; as filmesEmCartaz) {
   <h2 class="fs-4 mb-0 mt-4">Filmes em Cartaz</h2>
-  <app-carrossel-midias [midias]="filmesEmCartaz.results"></app-carrossel-midias>
+  <app-carrossel-midias
+    [tipoMidia]="tipoMidia.Filme"
+    [midias]="filmesEmCartaz.results"
+  ></app-carrossel-midias>
   }
 </div>
