@@ -18,7 +18,7 @@ export class MidiaService {
   private readonly domSanitizer = inject(DomSanitizer);
   private readonly urlBase: string = 'https://api.themoviedb.org/3';
 
-  public selecionarMidiasPopulares(tipo: TipoMidia) {
+  public selecionarMidiasPopulares(tipo: TipoMidia): Observable<MidiaApiResponse> {
     const tipoTraduzido = tipo === 'filme' ? 'movie' : 'tv';
 
     const urlCompleto = `${this.urlBase}/${tipoTraduzido}/popular?language=pt-BR`;
@@ -32,7 +32,7 @@ export class MidiaService {
       .pipe(map((res) => this.mapearMidia(res, tipo)));
   }
 
-  public selecionarMidiasMaisVotadas(tipo: TipoMidia) {
+  public selecionarMidiasMaisVotadas(tipo: TipoMidia): Observable<MidiaApiResponse> {
     const tipoTraduzido = tipo === 'filme' ? 'movie' : 'tv';
 
     const urlCompleto = `${this.urlBase}/${tipoTraduzido}/top_rated?language=pt-BR`;
@@ -46,7 +46,7 @@ export class MidiaService {
       .pipe(map((res) => this.mapearMidia(res, tipo)));
   }
 
-  public selecionarFilmesEmCartaz() {
+  public selecionarFilmesEmCartaz(): Observable<MidiaApiResponse> {
     const urlCompleto = `${this.urlBase}/movie/now_playing?language=pt-BR`;
 
     return this.http
@@ -89,30 +89,6 @@ export class MidiaService {
       .pipe(map((res) => this.mapearVideosMidia(res)));
   }
 
-  private mapearVideosMidia(x: VideosMidiaApiResponse): VideosMidiaApiResponse {
-    return {
-      ...x,
-      results: x.results
-        .filter((v) => v.site.toLowerCase() === 'youtube')
-        .map((v) => ({
-          ...v,
-          key: this.domSanitizer.bypassSecurityTrustResourceUrl(
-            'https://www.youtube.com/embed/' + v.key
-          ),
-        })),
-    };
-  }
-
-  private mapearDetalhesMidia(x: DetalhesMidia, tipo: TipoMidia): DetalhesMidia {
-    return {
-      ...x,
-      type: tipo,
-      vote_average: x.vote_average * 10,
-      poster_path: 'https://image.tmdb.org/t/p/w500/' + x.poster_path,
-      backdrop_path: 'https://image.tmdb.org/t/p/original/' + x.backdrop_path,
-    };
-  }
-
   private mapearMidia(x: MidiaApiResponse, tipoMidia: TipoMidia): MidiaApiResponse {
     return {
       ...x,
@@ -134,6 +110,30 @@ export class MidiaService {
         poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,
         backdrop_path: 'https://image.tmdb.org/t/p/original' + y.backdrop_path,
       })),
+    };
+  }
+
+  private mapearDetalhesMidia(x: DetalhesMidia, tipo: TipoMidia): DetalhesMidia {
+    return {
+      ...x,
+      type: tipo,
+      vote_average: x.vote_average * 10,
+      poster_path: 'https://image.tmdb.org/t/p/w500/' + x.poster_path,
+      backdrop_path: 'https://image.tmdb.org/t/p/original/' + x.backdrop_path,
+    };
+  }
+
+  private mapearVideosMidia(x: VideosMidiaApiResponse): VideosMidiaApiResponse {
+    return {
+      ...x,
+      results: x.results
+        .filter((v) => v.site.toLowerCase() === 'youtube')
+        .map((v) => ({
+          ...v,
+          key: this.domSanitizer.bypassSecurityTrustResourceUrl(
+            'https://www.youtube.com/embed/' + v.key
+          ),
+        })),
     };
   }
 }
