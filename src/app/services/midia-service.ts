@@ -103,8 +103,8 @@ export class MidiaService {
       .pipe(map(this.mapearCreditosMidia));
   }
 
-  public buscarMidias(query: string, pagina: number = 1): Observable<ResultadoBuscaApiResponse> {
-    const urlCompleto = `https://api.themoviedb.org/3/search/multi?query=${query}&page=${pagina}&language=pt-BR`;
+  public buscarMidias(query: string): Observable<ResultadoBuscaApiResponse> {
+    const urlCompleto = `https://api.themoviedb.org/3/search/multi?query=${query}&language=pt-BR`;
 
     return this.http
       .get<ResultadoBuscaApiResponse>(urlCompleto, {
@@ -113,21 +113,6 @@ export class MidiaService {
         },
       })
       .pipe(map(this.mapearResultadoBusca));
-  }
-
-  private mapearResultadoBusca(x: ResultadoBuscaApiResponse): ResultadoBuscaApiResponse {
-    return {
-      ...x,
-      results: x.results
-        .map((y) => ({
-          ...y,
-          media_type: (y.media_type.toString() === 'movie' ? 'filme' : 'tv') as TipoMidia,
-          vote_average: y.vote_average * 10,
-          poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,
-          backdrop_path: 'https://image.tmdb.org/t/p/original' + y.backdrop_path,
-        }))
-        .sort((a, b) => b.popularity - a.popularity),
-    };
   }
 
   private mapearMidia(x: MidiaApiResponse, tipo: TipoMidia): MidiaApiResponse {
@@ -195,6 +180,21 @@ export class MidiaService {
           ? 'https://image.tmdb.org/t/p/w300/' + y.profile_path
           : '/img/placeholder-person.webp',
       })),
+    };
+  }
+
+  private mapearResultadoBusca(x: ResultadoBuscaApiResponse): ResultadoBuscaApiResponse {
+    return {
+      ...x,
+      results: x.results
+        .map((y) => ({
+          ...y,
+          media_type: (y.media_type.toString() === 'movie' ? 'filme' : 'tv') as TipoMidia,
+          vote_average: y.vote_average * 10,
+          poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,
+          backdrop_path: 'https://image.tmdb.org/t/p/original' + y.backdrop_path,
+        }))
+        .sort((a, b) => b.popularity - a.popularity),
     };
   }
 }
