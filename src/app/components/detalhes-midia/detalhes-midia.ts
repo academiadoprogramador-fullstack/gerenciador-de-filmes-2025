@@ -37,7 +37,7 @@ export class DetalhesMidia {
     )
   );
 
-  public readonly creditos$ = this.detalhes$.pipe(
+  protected readonly creditos$ = this.detalhes$.pipe(
     switchMap((detalhes) =>
       this.midiaService.selecionarCreditosMidiaPorId(detalhes.media_type, detalhes.id)
     )
