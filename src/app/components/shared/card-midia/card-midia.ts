@@ -18,7 +18,7 @@ import { IconeAvaliacao } from '../icone-avaliacao/icone-avaliacao';
         @if (midia.vote_average > 0) {
         <app-icone-avaliacao
           [avaliacao]="midia.vote_average"
-          [tamanhoPx]="40"
+          [tamanhoPx]="35"
           class="app-icone-absoluto"
         ></app-icone-avaliacao>
         }

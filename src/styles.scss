@@ -133,12 +133,14 @@
 .app-borda-nota-mais-baixa {
   border: 2px solid transparent;
   border-top-color: #f62424;
+  outline: 2px solid #081c22;
 }
 
 .app-borda-nota-baixa {
   border: 2px solid transparent;
   border-top-color: #f62424;
   border-right-color: #f62424;
+  outline: 2px solid #081c22;
 }
 
 .app-borda-nota-media {
@@ -146,10 +148,12 @@
   border-top-color: #ffed23;
   border-right-color: #ffed23;
   border-bottom-color: #ffed23;
+  outline: 2px solid #081c22;
 }
 
 .app-borda-nota-alta {
   border: 2px solid #3fe437;
+  outline: 2px solid #081c22;
 }
 
 .app-botao-gradiente {
