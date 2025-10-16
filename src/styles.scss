@@ -27,6 +27,13 @@
 }
 
 // Geral
+.app-background-popular {
+  background-image: url('/img/background-popular.svg');
+  background-repeat: repeat-x;
+  background-size: cover;
+  background-position: bottom;
+}
+
 .app-scrollbar-customizado {
   &::-webkit-scrollbar {
     height: 8px;

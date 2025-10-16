@@ -32,7 +32,9 @@ import { IconeAvaliacao } from '../icone-avaliacao/icone-avaliacao';
       </div>
 
       <div class="mt-2">
-        <small class="text-muted">{{ midia.release_date ?? midia.first_air_date }}</small>
+        <small class="text-muted fw-semibold">{{
+          midia.release_date ?? midia.first_air_date
+        }}</small>
         <p class="app-titulo-card fw-bold">
           {{ (midia.title ?? midia.name)?.slice(0, 30) }}
         </p>
