@@ -10,6 +10,7 @@ import { DetalhesMidia } from '../models/detalhes-midia';
 import { MidiaApiResponse } from '../models/midia-api-response';
 import { TipoMidia } from '../models/tipo-midia';
 import { VideosMidiaApiResponse } from '../models/videos-midia-api-response';
+import { traduzirTipoMidia } from '../util/traduzir-tipo-midia';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,7 @@ export class MidiaService {
   private readonly urlBase: string = 'https://api.themoviedb.org/3';
 
   public selecionarMidiasPopulares(tipo: TipoMidia): Observable<MidiaApiResponse> {
-    const urlCompleto = `${this.urlBase}/${this.traduzirTipoMidia(tipo)}/popular?language=pt-BR`;
+    const urlCompleto = `${this.urlBase}/${traduzirTipoMidia(tipo)}/popular?language=pt-BR`;
 
     return this.http
       .get<MidiaApiResponse>(urlCompleto, {
@@ -32,7 +33,7 @@ export class MidiaService {
   }
 
   public selecionarMidiasMaisVotadas(tipo: TipoMidia): Observable<MidiaApiResponse> {
-    const urlCompleto = `${this.urlBase}/${this.traduzirTipoMidia(tipo)}/top_rated?language=pt-BR`;
+    const urlCompleto = `${this.urlBase}/${traduzirTipoMidia(tipo)}/top_rated?language=pt-BR`;
 
     return this.http
       .get<MidiaApiResponse>(urlCompleto, {
@@ -56,7 +57,7 @@ export class MidiaService {
   }
 
   public selecionarDetalhesMidiaPorId(tipo: TipoMidia, idMidia: number): Observable<DetalhesMidia> {
-    const urlCompleto = `${this.urlBase}/${this.traduzirTipoMidia(tipo)}/${idMidia}?language=pt-BR`;
+    const urlCompleto = `${this.urlBase}/${traduzirTipoMidia(tipo)}/${idMidia}?language=pt-BR`;
 
     return this.http
       .get<DetalhesMidia>(urlCompleto, {
@@ -71,7 +72,7 @@ export class MidiaService {
     tipo: TipoMidia,
     idMidia: number
   ): Observable<VideosMidiaApiResponse> {
-    const urlCompleto = `${this.urlBase}/${this.traduzirTipoMidia(
+    const urlCompleto = `${this.urlBase}/${traduzirTipoMidia(
       tipo
     )}/${idMidia}/videos?language=pt-BR`;
 
@@ -88,7 +89,7 @@ export class MidiaService {
     tipo: TipoMidia,
     idMidia: number
   ): Observable<CreditosMidiaApiResponse> {
-    const urlCompleto = `${this.urlBase}/${this.traduzirTipoMidia(
+    const urlCompleto = `${this.urlBase}/${traduzirTipoMidia(
       tipo
     )}/${idMidia}/credits?language=pt-BR`;
 
@@ -156,21 +157,14 @@ export class MidiaService {
         ...y,
         profile_path: y.profile_path
           ? 'https://image.tmdb.org/t/p/w300/' + y.profile_path
-          : '/person-placeholder.png',
+          : '/img/placeholder-person.webp',
       })),
       crew: x.crew.map((y) => ({
         ...y,
         profile_path: y.profile_path
           ? 'https://image.tmdb.org/t/p/w300/' + y.profile_path
-          : '/person-placeholder.png',
+          : '/img/placeholder-person.webp',
       })),
     };
-  }
-
-  private traduzirTipoMidia(tipoMidia: TipoMidia) {
-    if (!Object.values(TipoMidia).includes(tipoMidia))
-      throw new Error('Valor de enum "TipoMidia" inválido.');
-
-    return tipoMidia === 'filme' ? 'movie' : 'tv';
   }
 }
