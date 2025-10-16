@@ -5,7 +5,7 @@ import { Component, inject } from '@angular/core';
 
 import { TipoMidia } from '../../models/tipo-midia';
 import { MidiaService } from '../../services/midia-service';
-import { BannerPrincipal } from '../banner-principal/banner-principal';
+import { BannerPrincipal } from '../shared/banner-principal/banner-principal';
 import { CarrosselMidias } from '../shared/carrossel-midias/carrossel-midias';
 
 @Component({
