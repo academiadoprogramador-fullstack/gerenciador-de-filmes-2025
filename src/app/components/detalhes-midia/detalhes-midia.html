@@ -55,4 +55,24 @@
     </main>
   </div>
 </div>
+} @if (creditos$ | async; as creditos) {
+<section class="container py-4">
+  <h4>Elenco Principal</h4>
+
+  <div class="row flex-nowrap overflow-x-scroll g-2 pb-3 mt-2 app-scrollbar-customizado">
+    @for (membroElenco of creditos.cast; track membroElenco.id) {
+    <div class="col-4 col-lg-2">
+      <div class="card rounded-3 h-100">
+        <img class="card-img-top" [src]="membroElenco.profile_path" [alt]="membroElenco.name" />
+
+        <div class="card-body px-2">
+          <p class="card-title fw-semibold mb-0">{{ membroElenco.name }}</p>
+
+          <small class="text-secondary text-wrap">{{ membroElenco.character }}</small>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</section>
 }

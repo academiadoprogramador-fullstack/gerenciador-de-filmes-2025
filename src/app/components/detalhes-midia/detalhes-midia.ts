@@ -35,4 +35,8 @@ export class DetalhesMidia {
       this.midiaService.selecionarVideosMidiaPorId(detalhes.type, detalhes.id)
     )
   );
+
+  public readonly creditos$ = this.detalhes$.pipe(
+    switchMap((x) => this.midiaService.selecionarCreditosMidiaPorId(x.type, x.id))
+  );
 }

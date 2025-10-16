@@ -5,6 +5,7 @@ import { inject, Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { environment } from '../../environments/environment';
+import { CreditosMidiaApiResponse } from '../models/creditos-midia-api-response';
 import { DetalhesMidia } from '../models/detalhes-midia';
 import { MidiaApiResponse } from '../models/midia-api-response';
 import { TipoMidia } from '../models/tipo-midia';
@@ -19,9 +20,7 @@ export class MidiaService {
   private readonly urlBase: string = 'https://api.themoviedb.org/3';
 
   public selecionarMidiasPopulares(tipo: TipoMidia): Observable<MidiaApiResponse> {
-    const tipoTraduzido = tipo === 'filme' ? 'movie' : 'tv';
-
-    const urlCompleto = `${this.urlBase}/${tipoTraduzido}/popular?language=pt-BR`;
+    const urlCompleto = `${this.urlBase}/${this.traduzirTipoMidia(tipo)}/popular?language=pt-BR`;
 
     return this.http
       .get<MidiaApiResponse>(urlCompleto, {
@@ -33,9 +32,7 @@ export class MidiaService {
   }
 
   public selecionarMidiasMaisVotadas(tipo: TipoMidia): Observable<MidiaApiResponse> {
-    const tipoTraduzido = tipo === 'filme' ? 'movie' : 'tv';
-
-    const urlCompleto = `${this.urlBase}/${tipoTraduzido}/top_rated?language=pt-BR`;
+    const urlCompleto = `${this.urlBase}/${this.traduzirTipoMidia(tipo)}/top_rated?language=pt-BR`;
 
     return this.http
       .get<MidiaApiResponse>(urlCompleto, {
@@ -59,9 +56,7 @@ export class MidiaService {
   }
 
   public selecionarDetalhesMidiaPorId(tipo: TipoMidia, idMidia: number): Observable<DetalhesMidia> {
-    const tipoTraduzido = tipo === 'filme' ? 'movie' : 'tv';
-
-    const urlCompleto = `${this.urlBase}/${tipoTraduzido}/${idMidia}?language=pt-BR`;
+    const urlCompleto = `${this.urlBase}/${this.traduzirTipoMidia(tipo)}/${idMidia}?language=pt-BR`;
 
     return this.http
       .get<DetalhesMidia>(urlCompleto, {
@@ -76,9 +71,9 @@ export class MidiaService {
     tipo: TipoMidia,
     idMidia: number
   ): Observable<VideosMidiaApiResponse> {
-    const tipoTraduzido = tipo === 'filme' ? 'movie' : 'tv';
-
-    const urlCompleto = `${this.urlBase}/${tipoTraduzido}/${idMidia}/videos?language=pt-BR`;
+    const urlCompleto = `${this.urlBase}/${this.traduzirTipoMidia(
+      tipo
+    )}/${idMidia}/videos?language=pt-BR`;
 
     return this.http
       .get<VideosMidiaApiResponse>(urlCompleto, {
@@ -89,10 +84,27 @@ export class MidiaService {
       .pipe(map((res) => this.mapearVideosMidia(res)));
   }
 
-  private mapearMidia(x: MidiaApiResponse, tipoMidia: TipoMidia): MidiaApiResponse {
+  public selecionarCreditosMidiaPorId(
+    tipo: TipoMidia,
+    idMidia: number
+  ): Observable<CreditosMidiaApiResponse> {
+    const urlCompleto = `${this.urlBase}/${this.traduzirTipoMidia(
+      tipo
+    )}/${idMidia}/credits?language=pt-BR`;
+
+    return this.http
+      .get<CreditosMidiaApiResponse>(urlCompleto, {
+        headers: {
+          Authorization: environment.apiKey,
+        },
+      })
+      .pipe(map(this.mapearCreditosMidia));
+  }
+
+  private mapearMidia(x: MidiaApiResponse, tipo: TipoMidia): MidiaApiResponse {
     return {
       ...x,
-      type: tipoMidia,
+      type: tipo,
       results: x.results.map((y) => ({
         ...y,
         poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,
@@ -135,5 +147,30 @@ export class MidiaService {
           ),
         })),
     };
+  }
+
+  private mapearCreditosMidia(x: CreditosMidiaApiResponse): CreditosMidiaApiResponse {
+    return {
+      ...x,
+      cast: x.cast.map((y) => ({
+        ...y,
+        profile_path: y.profile_path
+          ? 'https://image.tmdb.org/t/p/w300/' + y.profile_path
+          : '/person-placeholder.png',
+      })),
+      crew: x.crew.map((y) => ({
+        ...y,
+        profile_path: y.profile_path
+          ? 'https://image.tmdb.org/t/p/w300/' + y.profile_path
+          : '/person-placeholder.png',
+      })),
+    };
+  }
+
+  private traduzirTipoMidia(tipoMidia: TipoMidia) {
+    if (!Object.values(TipoMidia).includes(tipoMidia))
+      throw new Error('Valor de enum "TipoMidia" inválido.');
+
+    return tipoMidia === 'filme' ? 'movie' : 'tv';
   }
 }
