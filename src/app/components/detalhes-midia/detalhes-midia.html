@@ -30,7 +30,11 @@
           <article class="mt-4">
             <h3>Sinopse</h3>
 
+            @if (detalhes.overview && detalhes.overview.length > 0) {
             <p class="fs-5">{{ detalhes.overview }}</p>
+            } @else {
+            <p class="fs-5">Sinopse não disponível...</p>
+            }
           </article>
         </div>
       </section>
@@ -39,9 +43,13 @@
       <section class="mt-5">
         <h3>Trailer</h3>
 
+        @if (videos.at(0)) {
         <div class="ratio ratio-16x9 mt-4">
-          <iframe [src]="videos.at(0)?.key" frameborder="0"></iframe>
+          <iframe [src]="videos.at(0)!.key" frameborder="0"></iframe>
         </div>
+        } @else {
+        <span>Nenhum trailer disponível para visualização...</span>
+        }
       </section>
       }
     </main>

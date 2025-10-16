@@ -10,7 +10,7 @@ export interface DetalhesMidia {
   first_air_date?: string;
   title?: string;
   name?: string;
-  overview: string;
+  overview?: string;
   popularity: number;
   poster_path: string;
   backdrop_path: string;

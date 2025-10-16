@@ -13,7 +13,7 @@ export const routes: Routes = [
     loadComponent: () => import('./components/inicio/inicio').then((c) => c.Inicio),
   },
   {
-    path: ':tipoMidia/:idMidia/detalhes', // filme / tv = /tv/12345/detalhes /filme/3245/detalhes
+    path: ':tipoMidia/:idMidia/detalhes',
     loadComponent: () =>
       import('./components/detalhes-midia/detalhes-midia').then((c) => c.DetalhesMidia),
   },
