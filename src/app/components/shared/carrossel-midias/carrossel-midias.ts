@@ -3,10 +3,11 @@ import { RouterLink } from '@angular/router';
 
 import { Midia } from '../../../models/midia-api-response';
 import { TipoMidia } from '../../../models/tipo-midia';
+import { IconeAvaliacao } from '../icone-avaliacao/icone-avaliacao';
 
 @Component({
   selector: 'app-carrossel-midias',
-  imports: [RouterLink],
+  imports: [RouterLink, IconeAvaliacao],
   templateUrl: './carrossel-midias.html',
 })
 export class CarrosselMidias {

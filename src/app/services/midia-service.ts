@@ -108,6 +108,7 @@ export class MidiaService {
       type: tipo,
       results: x.results.map((y) => ({
         ...y,
+        vote_average: y.vote_average * 10,
         poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,
         backdrop_path: 'https://image.tmdb.org/t/p/original' + y.backdrop_path,
       })),
@@ -120,6 +121,7 @@ export class MidiaService {
       type: TipoMidia.Filme,
       results: x.results.map((y) => ({
         ...y,
+        vote_average: y.vote_average * 10,
         poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,
         backdrop_path: 'https://image.tmdb.org/t/p/original' + y.backdrop_path,
       })),

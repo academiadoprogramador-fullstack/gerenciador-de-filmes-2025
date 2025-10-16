@@ -3,6 +3,14 @@
   <div class="col-7 col-lg-3 col-xl-2">
     <a class="text-decoration-none text-dark" [routerLink]="['/', tipoMidia, midia.id, 'detalhes']">
       <div class="card rounded-3 app-card-filme">
+        @if (midia.vote_average > 0) {
+        <app-icone-avaliacao
+          [avaliacao]="midia.vote_average"
+          [tamanhoPx]="40"
+          class="app-icone-absoluto"
+        ></app-icone-avaliacao>
+        }
+
         <img
           class="card-img-top rounded-3"
           style="min-height: 230px"

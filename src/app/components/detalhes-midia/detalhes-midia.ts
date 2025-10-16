@@ -6,10 +6,11 @@ import { ActivatedRoute } from '@angular/router';
 
 import { TipoMidia } from '../../models/tipo-midia';
 import { MidiaService } from '../../services/midia-service';
+import { IconeAvaliacao } from '../shared/icone-avaliacao/icone-avaliacao';
 
 @Component({
   selector: 'app-detalhes-midia',
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, IconeAvaliacao],
   templateUrl: './detalhes-midia.html',
 })
 export class DetalhesMidia {
