@@ -2,7 +2,7 @@ import { TipoMidia } from './tipo-midia';
 
 export interface DetalhesMidia {
   id: number;
-  type: TipoMidia;
+  media_type: TipoMidia;
   adult: boolean;
   original_language: string;
   original_title: string;

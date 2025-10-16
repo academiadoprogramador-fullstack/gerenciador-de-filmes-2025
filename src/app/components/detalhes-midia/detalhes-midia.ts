@@ -5,7 +5,7 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { TipoMidia } from '../../models/tipo-midia';
-import { MidiaService } from '../../services/midia-service';
+import { MidiaService } from '../../services/midia.service';
 import { IconeAvaliacao } from '../shared/icone-avaliacao/icone-avaliacao';
 
 @Component({
@@ -33,11 +33,13 @@ export class DetalhesMidia {
 
   protected readonly videos$ = this.detalhes$.pipe(
     switchMap((detalhes) =>
-      this.midiaService.selecionarVideosMidiaPorId(detalhes.type, detalhes.id)
+      this.midiaService.selecionarVideosMidiaPorId(detalhes.media_type, detalhes.id)
     )
   );
 
   public readonly creditos$ = this.detalhes$.pipe(
-    switchMap((x) => this.midiaService.selecionarCreditosMidiaPorId(x.type, x.id))
+    switchMap((detalhes) =>
+      this.midiaService.selecionarCreditosMidiaPorId(detalhes.media_type, detalhes.id)
+    )
   );
 }
