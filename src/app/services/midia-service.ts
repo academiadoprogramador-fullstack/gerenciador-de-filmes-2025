@@ -8,6 +8,7 @@ import { environment } from '../../environments/environment';
 import { CreditosMidiaApiResponse } from '../models/creditos-midia-api-response';
 import { DetalhesMidia } from '../models/detalhes-midia';
 import { MidiaApiResponse } from '../models/midia-api-response';
+import { ResultadoBuscaApiResponse } from '../models/resultado-busca-api-response';
 import { TipoMidia } from '../models/tipo-midia';
 import { VideosMidiaApiResponse } from '../models/videos-midia-api-response';
 import { traduzirTipoMidia } from '../util/traduzir-tipo-midia';
@@ -100,6 +101,32 @@ export class MidiaService {
         },
       })
       .pipe(map(this.mapearCreditosMidia));
+  }
+
+  public buscarMidias(query: string, pagina: number = 1): Observable<ResultadoBuscaApiResponse> {
+    const urlCompleto = `https://api.themoviedb.org/3/search/multi?query=${query}&page=${pagina}&language=pt-BR`;
+
+    return this.http
+      .get<ResultadoBuscaApiResponse>(urlCompleto, {
+        headers: {
+          Authorization: environment.apiKey,
+        },
+      })
+      .pipe(map(this.mapearResultadoBusca));
+  }
+
+  private mapearResultadoBusca(x: ResultadoBuscaApiResponse): ResultadoBuscaApiResponse {
+    return {
+      ...x,
+      results: x.results
+        .map((y) => ({
+          ...y,
+          vote_average: y.vote_average * 10,
+          poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,
+          backdrop_path: 'https://image.tmdb.org/t/p/original' + y.backdrop_path,
+        }))
+        .sort((a, b) => b.popularity - a.popularity),
+    };
   }
 
   private mapearMidia(x: MidiaApiResponse, tipo: TipoMidia): MidiaApiResponse {

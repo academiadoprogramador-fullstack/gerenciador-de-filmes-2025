@@ -1,1 +1,5 @@
-{{ searchQueryParam$ | async }}
+<div class="container mt-4">
+  <h1>Busca por "{{ queryParam$ | async }}"</h1>
+
+  {{ midiasSelecionadas$ | async }}
+</div>
