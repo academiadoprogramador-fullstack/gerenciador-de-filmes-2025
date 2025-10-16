@@ -121,6 +121,7 @@ export class MidiaService {
       results: x.results
         .map((y) => ({
           ...y,
+          media_type: (y.media_type.toString() === 'movie' ? 'filme' : 'tv') as TipoMidia,
           vote_average: y.vote_average * 10,
           poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,
           backdrop_path: 'https://image.tmdb.org/t/p/original' + y.backdrop_path,

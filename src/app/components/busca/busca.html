@@ -1,5 +1,29 @@
 <div class="container mt-4">
   <h1>Busca por "{{ queryParam$ | async }}"</h1>
 
-  {{ midiasSelecionadas$ | async }}
+  @if (filmesSelecionados$ | async; as filmes) {
+  <h3 class="mt-4">Filmes</h3>
+
+  <div class="row g-3 mt-2">
+    @for (filme of filmes; track filme.id) {
+    <div class="col-7 col-lg-3 col-xl-2">
+      <app-card-midia [tipoMidia]="filme.media_type" [midia]="filme"></app-card-midia>
+    </div>
+    }
+  </div>
+  }
+
+  <hr class="my-4" />
+
+  @if (seriesSelecionadas$ | async; as series) {
+  <h3>Séries de TV</h3>
+
+  <div class="row g-3 mt-2">
+    @for (serie of series; track serie.id) {
+    <div class="col-7 col-lg-3 col-xl-2">
+      <app-card-midia [tipoMidia]="serie.media_type" [midia]="serie"></app-card-midia>
+    </div>
+    }
+  </div>
+  }
 </div>

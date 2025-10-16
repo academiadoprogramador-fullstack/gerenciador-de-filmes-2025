@@ -1,3 +1,5 @@
+import { TipoMidia } from './tipo-midia';
+
 export interface ResultadoBuscaApiResponse {
   page: number;
   results: ResultadoBusca[];
@@ -7,7 +9,7 @@ export interface ResultadoBuscaApiResponse {
 
 export interface ResultadoBusca {
   id: number;
-  media_type: string;
+  media_type: TipoMidia;
   adult: boolean;
   original_language: string;
   original_title: string;
