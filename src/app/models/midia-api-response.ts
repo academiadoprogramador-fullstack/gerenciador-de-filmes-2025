@@ -1,7 +1,7 @@
 import { TipoMidia } from './tipo-midia';
 
 export interface MidiaApiResponse {
-  type: TipoMidia;
+  media_type: TipoMidia;
   page: number;
   results: Midia[];
   total_pages: number;
