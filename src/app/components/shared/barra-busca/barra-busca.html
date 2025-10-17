@@ -12,13 +12,13 @@
             placeholder="Buscar por um filme ou série de TV"
             id="busca"
             [(ngModel)]="inputBusca"
-            (keyup.enter)="pesquisar()"
+            (keyup.enter)="onSearch()"
           />
         </div>
       </div>
       <button
         [hidden]="!inputBusca"
-        (click)="pesquisar()"
+        (click)="onSearch()"
         class="col btn rounded-4 app-botao-gradiente"
       >
         Pesquisar

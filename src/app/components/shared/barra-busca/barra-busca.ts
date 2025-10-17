@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -9,8 +9,12 @@ import { FormsModule } from '@angular/forms';
 export class BarraBusca {
   protected inputBusca: string | null = null;
 
-  public pesquisar(): void {
-    if (!this.inputBusca) return;
+  @Output() protected readonly buscar = new EventEmitter<string>();
+
+  public onSearch(): void {
+    if (!this.inputBusca || this.inputBusca !== '') return;
+
+    this.buscar.emit(this.inputBusca);
 
     this.inputBusca = null;
   }
