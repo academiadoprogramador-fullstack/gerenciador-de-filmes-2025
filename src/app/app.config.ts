@@ -8,6 +8,7 @@ export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   {
     path: 'inicio',
+    title: 'Início | APMDb',
     loadComponent: () => import('./components/inicio/inicio').then((c) => c.Inicio),
   },
   {

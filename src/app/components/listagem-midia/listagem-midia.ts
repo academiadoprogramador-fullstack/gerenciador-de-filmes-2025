@@ -1,7 +1,8 @@
-import { filter, map, shareReplay, switchMap } from 'rxjs';
+import { filter, map, shareReplay, switchMap, tap } from 'rxjs';
 
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 
 import { TipoColecaoMidia } from '../../models/tipo-colecao-midia';
@@ -15,6 +16,7 @@ import { CardMidia } from '../shared/card-midia/card-midia';
   templateUrl: './listagem-midia.html',
 })
 export class ListagemMidia {
+  private readonly title = inject(Title);
   private readonly route = inject(ActivatedRoute);
   private readonly midiaService = inject(MidiaService);
 
@@ -47,7 +49,10 @@ export class ListagemMidia {
           : 'Mais Votadas';
 
       return { tipoMidia: tipoMidia, tipoColecaoMidia: tipoColecaoMidia };
-    })
+    }),
+    tap((params) =>
+      this.title.setTitle(`Listagem de ${params.tipoMidia} ${params.tipoColecaoMidia} | APMDb`)
+    )
   );
 
   protected readonly midiasSelecionadas$ = this.params$.pipe(

@@ -1,7 +1,8 @@
-import { filter, map, shareReplay, switchMap } from 'rxjs';
+import { filter, map, shareReplay, switchMap, tap } from 'rxjs';
 
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 
 import { TipoMidia } from '../../models/tipo-midia';
@@ -14,6 +15,7 @@ import { IconeAvaliacao } from '../shared/icone-avaliacao/icone-avaliacao';
   templateUrl: './detalhes-midia.html',
 })
 export class DetalhesMidia {
+  private readonly title = inject(Title);
   protected readonly route = inject(ActivatedRoute);
   protected readonly midiaService = inject(MidiaService);
 
@@ -28,6 +30,7 @@ export class DetalhesMidia {
     switchMap((params) =>
       this.midiaService.selecionarDetalhesMidiaPorId(params.tipoMidia, params.idMidia)
     ),
+    tap((detalhes) => this.title.setTitle(`${detalhes.title ?? detalhes.name} | APMDb`)),
     shareReplay({ bufferSize: 1, refCount: true })
   );
 
