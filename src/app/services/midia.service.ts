@@ -1,4 +1,4 @@
-import { map, Observable } from 'rxjs';
+import { map, Observable, withLatestFrom } from 'rxjs';
 
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
@@ -8,15 +8,18 @@ import { environment } from '../../environments/environment';
 import { CreditosMidiaApiResponse } from '../models/creditos-midia-api-response';
 import { DetalhesMidia } from '../models/detalhes-midia';
 import { MidiaApiResponse } from '../models/midia-api-response';
+import { MidiaFavorita } from '../models/midia-favorita';
 import { TipoMidia } from '../models/tipo-midia';
 import { VideosMidiaApiResponse } from '../models/videos-midia-api-response';
 import { traduzirTipoMidia } from '../util/traduzir-tipo-midia';
+import { MidiaFavoritaService } from './midia-favorita.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MidiaService {
   private readonly http = inject(HttpClient);
+  private readonly localStorageService = inject(MidiaFavoritaService);
   private readonly domSanitizer = inject(DomSanitizer);
   private readonly urlBase: string = 'https://api.themoviedb.org/3';
 
@@ -29,7 +32,10 @@ export class MidiaService {
           Authorization: environment.apiKey,
         },
       })
-      .pipe(map((res) => this.mapearMidia(res, tipo)));
+      .pipe(
+        withLatestFrom(this.localStorageService.selecionarMidiasFavoritas()),
+        map(([res, midiasFavoritas]) => this.mapearMidia(res, tipo, midiasFavoritas))
+      );
   }
 
   public selecionarMidiasMaisVotadas(tipo: TipoMidia): Observable<MidiaApiResponse> {
@@ -41,7 +47,10 @@ export class MidiaService {
           Authorization: environment.apiKey,
         },
       })
-      .pipe(map((res) => this.mapearMidia(res, tipo)));
+      .pipe(
+        withLatestFrom(this.localStorageService.selecionarMidiasFavoritas()),
+        map(([res, midiasFavoritas]) => this.mapearMidia(res, tipo, midiasFavoritas))
+      );
   }
 
   public selecionarFilmesEmCartaz(): Observable<MidiaApiResponse> {
@@ -53,7 +62,10 @@ export class MidiaService {
           Authorization: environment.apiKey,
         },
       })
-      .pipe(map(this.mapearFilme));
+      .pipe(
+        withLatestFrom(this.localStorageService.selecionarMidiasFavoritas()),
+        map(([res, midiasFavoritas]) => this.mapearFilme(res, midiasFavoritas))
+      );
   }
 
   public selecionarDetalhesMidiaPorId(tipo: TipoMidia, idMidia: number): Observable<DetalhesMidia> {
@@ -65,7 +77,10 @@ export class MidiaService {
           Authorization: environment.apiKey,
         },
       })
-      .pipe(map((res) => this.mapearDetalhesMidia(res, tipo)));
+      .pipe(
+        withLatestFrom(this.localStorageService.selecionarMidiasFavoritas()),
+        map(([res, midiasFavoritas]) => this.mapearDetalhesMidia(res, tipo, midiasFavoritas))
+      );
   }
 
   public selecionarVideosMidiaPorId(
@@ -102,12 +117,17 @@ export class MidiaService {
       .pipe(map(this.mapearCreditosMidia));
   }
 
-  private mapearMidia(x: MidiaApiResponse, tipo: TipoMidia): MidiaApiResponse {
+  private mapearMidia(
+    x: MidiaApiResponse,
+    tipo: TipoMidia,
+    midiasFavoritas: MidiaFavorita[]
+  ): MidiaApiResponse {
     return {
       ...x,
       media_type: tipo,
       results: x.results.map((y) => ({
         ...y,
+        favorite: midiasFavoritas.some((z) => z.id === y.id),
         vote_average: y.vote_average * 10,
         poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,
         backdrop_path: 'https://image.tmdb.org/t/p/original' + y.backdrop_path,
@@ -115,12 +135,13 @@ export class MidiaService {
     };
   }
 
-  private mapearFilme(x: MidiaApiResponse): MidiaApiResponse {
+  private mapearFilme(x: MidiaApiResponse, midiasFavoritas: MidiaFavorita[]): MidiaApiResponse {
     return {
       ...x,
       media_type: TipoMidia.Filme,
       results: x.results.map((y) => ({
         ...y,
+        favorite: midiasFavoritas.some((z) => z.id === y.id),
         vote_average: y.vote_average * 10,
         poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,
         backdrop_path: 'https://image.tmdb.org/t/p/original' + y.backdrop_path,
@@ -128,9 +149,14 @@ export class MidiaService {
     };
   }
 
-  private mapearDetalhesMidia(x: DetalhesMidia, tipo: TipoMidia): DetalhesMidia {
+  private mapearDetalhesMidia(
+    x: DetalhesMidia,
+    tipo: TipoMidia,
+    midiasFavoritas: MidiaFavorita[]
+  ): DetalhesMidia {
     return {
       ...x,
+      favorite: midiasFavoritas.some((y) => y.id === x.id),
       media_type: tipo,
       vote_average: x.vote_average * 10,
       poster_path: 'https://image.tmdb.org/t/p/w500/' + x.poster_path,

@@ -18,6 +18,7 @@
     [tipoMidia]="respostaMidiasPopulares.media_type"
     [midias]="respostaMidiasPopulares.results"
     [popular]="true"
+    (alternarStatusFavorito)="midiaFavoritaService.alternarStatusMidiaFavorita($event)"
   ></app-carrossel-midias>
   }
 </div>

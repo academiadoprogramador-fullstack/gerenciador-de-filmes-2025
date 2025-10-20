@@ -4,6 +4,7 @@ import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 
 import { TipoMidia } from '../../models/tipo-midia';
+import { MidiaFavoritaService } from '../../services/midia-favorita.service';
 import { MidiaService } from '../../services/midia.service';
 import { BannerPrincipal } from '../shared/banner-principal/banner-principal';
 import { CarrosselMidias } from '../shared/carrossel-midias/carrossel-midias';
@@ -18,6 +19,7 @@ import {
 })
 export class Inicio {
   protected readonly midiaService = inject(MidiaService);
+  protected readonly midiaFavoritaService = inject(MidiaFavoritaService);
   protected readonly tipoMidia = TipoMidia;
 
   protected readonly midiasPopularesSubject$ = new BehaviorSubject<TipoMidia>(TipoMidia.Filme);

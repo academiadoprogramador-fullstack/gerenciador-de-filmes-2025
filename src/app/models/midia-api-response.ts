@@ -11,6 +11,7 @@ export interface MidiaApiResponse {
 // Representa tanto Filme quanto Série
 export interface Midia {
   id: number;
+  favorite: boolean;
   adult: boolean;
   original_language: string;
   original_title: string;

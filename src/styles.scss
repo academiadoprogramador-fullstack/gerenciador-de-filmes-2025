@@ -141,6 +141,15 @@
   right: 5px;
 }
 
+.app-botao-favorito-absoluto {
+  position: absolute;
+
+  top: 0;
+  right: -5px;
+
+  z-index: 1000;
+}
+
 .app-borda-nota-mais-baixa {
   border: 2px solid transparent;
   border-top-color: #f62424;
