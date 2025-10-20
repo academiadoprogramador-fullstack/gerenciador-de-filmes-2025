@@ -1,4 +1,4 @@
-import { BehaviorSubject, switchMap } from 'rxjs';
+import { BehaviorSubject, refCount, shareReplay, switchMap } from 'rxjs';
 
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
@@ -24,11 +24,13 @@ export class Inicio {
   protected readonly midiasMaisVotadasSubject$ = new BehaviorSubject<TipoMidia>(TipoMidia.Filme);
 
   protected readonly midiasPopulares$ = this.midiasPopularesSubject$.pipe(
-    switchMap((tipo) => this.midiaService.selecionarMidiasPopulares(tipo))
+    switchMap((tipo) => this.midiaService.selecionarMidiasPopulares(tipo)),
+    shareReplay({ bufferSize: 1, refCount: true })
   );
 
   protected readonly midiasMaisVotadas$ = this.midiasMaisVotadasSubject$.pipe(
-    switchMap((tipo) => this.midiaService.selecionarMidiasMaisVotadas(tipo))
+    switchMap((tipo) => this.midiaService.selecionarMidiasMaisVotadas(tipo)),
+    shareReplay({ bufferSize: 1, refCount: true })
   );
 
   protected readonly filmesEmCartaz$ = this.midiaService.selecionarFilmesEmCartaz();

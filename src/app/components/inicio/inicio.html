@@ -6,9 +6,9 @@
     <h2 class="fs-4 mb-0">Populares</h2>
 
     <app-selecao-carrossel-midias
-      atributoId="midiasPopulares"
-      atributoName="tipoMidiasPopulares"
-      (valorSelecionado)="midiasPopularesSubject$.next($event)"
+      idAgrupamento="midiasPopulares"
+      nomeAgrupamento="tipoMidiasPopulares"
+      (tipoMidiaAlterado)="midiasPopularesSubject$.next($event)"
       [tipoMidiaSelecionado]="(midiasPopularesSubject$ | async) ?? tipoMidia.Filme"
     ></app-selecao-carrossel-midias>
   </div>
@@ -29,9 +29,9 @@
       <h2 class="fs-4 mb-0">Mais Votados</h2>
 
       <app-selecao-carrossel-midias
-        atributoId="midiasMidiaMaisVotados"
-        atributoName="tipoMidiaMaisVotados"
-        (valorSelecionado)="midiasMaisVotadasSubject$.next($event)"
+        idAgrupamento="midiasMaisVotados"
+        nomeAgrupamento="tipoMidiaMaisVotados"
+        (tipoMidiaAlterado)="midiasMaisVotadasSubject$.next($event)"
         [tipoMidiaSelecionado]="(midiasMaisVotadasSubject$ | async) ?? tipoMidia.Filme"
       ></app-selecao-carrossel-midias>
     </div>
