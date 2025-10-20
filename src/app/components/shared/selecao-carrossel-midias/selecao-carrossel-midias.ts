@@ -7,22 +7,22 @@ import { TipoMidia } from '../../../models/tipo-midia';
   template: `
     <div class="btn-group rounded-pill overflow-hidden" role="group">
       <input
-        (change)="tipoMidiaAlterado.emit(tipoMidia.Filme)"
-        [checked]="tipoMidiaSelecionado === tipoMidia.Filme"
         type="radio"
         class="btn-check"
-        [name]="nomeAgrupamento"
         [id]="idAgrupamento"
+        [name]="nomeAgrupamento"
+        [checked]="tipoMidiaSelecionado === tipoMidia.Filme"
+        (change)="tipoMidiaAlterado.emit(tipoMidia.Filme)"
       />
       <label [for]="idAgrupamento" class="btn btn-sm btn-outline-primary border-0">Filmes</label>
 
       <input
-        (change)="tipoMidiaAlterado.emit(tipoMidia.Tv)"
-        [checked]="tipoMidiaSelecionado === tipoMidia.Tv"
         type="radio"
         class="btn-check"
-        [name]="nomeAgrupamento"
         [id]="idAgrupamento + '1'"
+        [name]="nomeAgrupamento"
+        [checked]="tipoMidiaSelecionado === tipoMidia.Tv"
+        (change)="tipoMidiaAlterado.emit(tipoMidia.Tv)"
       />
       <label [for]="idAgrupamento + '1'" class="btn btn-sm btn-outline-primary border-0">TV</label>
     </div>

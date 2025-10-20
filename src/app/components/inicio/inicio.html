@@ -8,8 +8,8 @@
     <app-selecao-carrossel-midias
       idAgrupamento="midiasPopulares"
       nomeAgrupamento="tipoMidiasPopulares"
-      (tipoMidiaAlterado)="midiasPopularesSubject$.next($event)"
       [tipoMidiaSelecionado]="(midiasPopularesSubject$ | async) ?? tipoMidia.Filme"
+      (tipoMidiaAlterado)="midiasPopularesSubject$.next($event)"
     ></app-selecao-carrossel-midias>
   </div>
 
@@ -31,8 +31,8 @@
       <app-selecao-carrossel-midias
         idAgrupamento="midiasMaisVotados"
         nomeAgrupamento="tipoMidiaMaisVotados"
-        (tipoMidiaAlterado)="midiasMaisVotadasSubject$.next($event)"
         [tipoMidiaSelecionado]="(midiasMaisVotadasSubject$ | async) ?? tipoMidia.Filme"
+        (tipoMidiaAlterado)="midiasMaisVotadasSubject$.next($event)"
       ></app-selecao-carrossel-midias>
     </div>
 
@@ -47,11 +47,12 @@
 
 <!-- Filmes em Cartaz -->
 <div class="container py-3">
-  @if (filmesEmCartaz$ | async; as filmesEmCartaz) {
+  @if (filmesEmCartaz$ | async; as respostaFilmesEmCartaz) {
   <h2 class="fs-4 mb-0">Filmes em Cartaz</h2>
+
   <app-carrossel-midias
     [tipoMidia]="tipoMidia.Filme"
-    [midias]="filmesEmCartaz.results"
+    [midias]="respostaFilmesEmCartaz.results"
   ></app-carrossel-midias>
   }
 </div>
