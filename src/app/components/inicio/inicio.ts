@@ -7,10 +7,13 @@ import { TipoMidia } from '../../models/tipo-midia';
 import { MidiaService } from '../../services/midia.service';
 import { BannerPrincipal } from '../shared/banner-principal/banner-principal';
 import { CarrosselMidias } from '../shared/carrossel-midias/carrossel-midias';
+import {
+    SelecaoCarrosselMidias
+} from '../shared/selecao-carrossel-midias/selecao-carrossel-midias';
 
 @Component({
   selector: 'app-inicio',
-  imports: [AsyncPipe, BannerPrincipal, CarrosselMidias],
+  imports: [AsyncPipe, BannerPrincipal, CarrosselMidias, SelecaoCarrosselMidias],
   templateUrl: './inicio.html',
 })
 export class Inicio {

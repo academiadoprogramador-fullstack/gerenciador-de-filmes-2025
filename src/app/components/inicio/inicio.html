@@ -1,76 +1,42 @@
 <app-banner-principal></app-banner-principal>
 
+<!-- Mídias Populares -->
 <div class="container py-3">
-  <!-- Mídias Populares -->
-  @if (midiasPopulares$ | async; as respostMidiasPopulares) {
   <div class="d-flex align-items-center gap-3">
     <h2 class="fs-4 mb-0">Populares</h2>
 
-    <div class="btn-group rounded-pill overflow-hidden" role="group">
-      <input
-        (change)="midiasPopularesSubject$.next(tipoMidia.Filme)"
-        checked="true"
-        type="radio"
-        class="btn-check"
-        name="tipoMidiasPopulares"
-        id="radioMidiasPopularesFilmes"
-      />
-      <label for="radioMidiasPopularesFilmes" class="btn btn-sm btn-outline-primary border-0"
-        >Filmes</label
-      >
-
-      <input
-        (change)="midiasPopularesSubject$.next(tipoMidia.Tv)"
-        type="radio"
-        class="btn-check"
-        name="tipoMidiasPopulares"
-        id="radioMidiasPopularesTv"
-      />
-      <label for="radioMidiasPopularesTv" class="btn btn-sm btn-outline-primary border-0">TV</label>
-    </div>
+    <app-selecao-carrossel-midias
+      atributoId="midiasPopulares"
+      atributoName="tipoMidiasPopulares"
+      (valorSelecionado)="midiasPopularesSubject$.next($event)"
+      [tipoMidiaSelecionado]="(midiasPopularesSubject$ | async) ?? tipoMidia.Filme"
+    ></app-selecao-carrossel-midias>
   </div>
 
+  @if (midiasPopulares$ | async; as respostaMidiasPopulares) {
   <app-carrossel-midias
-    [tipoMidia]="respostMidiasPopulares.media_type"
-    [midias]="respostMidiasPopulares.results"
+    [tipoMidia]="respostaMidiasPopulares.media_type"
+    [midias]="respostaMidiasPopulares.results"
     [popular]="true"
   ></app-carrossel-midias>
   }
 </div>
 
+<!-- Mídias Mais Votadas -->
 <div class="app-banner-fundo">
   <div class="container py-3">
-    <!-- Mídias Mais Votadas -->
-    @if (midiasMaisVotadas$ | async; as respostaMidiasMaisVotadas) {
     <div class="d-flex align-items-center gap-3">
       <h2 class="fs-4 mb-0">Mais Votados</h2>
 
-      <div class="btn-group rounded-pill overflow-hidden" role="group">
-        <input
-          (change)="midiasMaisVotadasSubject$.next(tipoMidia.Filme)"
-          checked="true"
-          type="radio"
-          class="btn-check"
-          name="tipoMidiasMaisVotadas"
-          id="radioMidiasMaisVotadasFilmes"
-        />
-        <label for="radioMidiasMaisVotadasFilmes" class="btn btn-sm btn-outline-primary border-0"
-          >Filmes</label
-        >
-
-        <input
-          (change)="midiasMaisVotadasSubject$.next(tipoMidia.Tv)"
-          type="radio"
-          class="btn-check"
-          name="tipoMidiasMaisVotadas"
-          id="radioMidiasMaisVotadasTv"
-        />
-        <label for="radioMidiasMaisVotadasTv" class="btn btn-sm btn-outline-primary border-0"
-          >TV</label
-        >
-      </div>
+      <app-selecao-carrossel-midias
+        atributoId="midiasMidiaMaisVotados"
+        atributoName="tipoMidiaMaisVotados"
+        (valorSelecionado)="midiasMaisVotadasSubject$.next($event)"
+        [tipoMidiaSelecionado]="(midiasMaisVotadasSubject$ | async) ?? tipoMidia.Filme"
+      ></app-selecao-carrossel-midias>
     </div>
 
+    @if (midiasMaisVotadas$ | async; as respostaMidiasMaisVotadas) {
     <app-carrossel-midias
       [tipoMidia]="respostaMidiasMaisVotadas.media_type"
       [midias]="respostaMidiasMaisVotadas.results"
@@ -79,8 +45,8 @@
   </div>
 </div>
 
+<!-- Filmes em Cartaz -->
 <div class="container py-3">
-  <!-- Filmes em Cartaz -->
   @if (filmesEmCartaz$ | async; as filmesEmCartaz) {
   <h2 class="fs-4 mb-0">Filmes em Cartaz</h2>
   <app-carrossel-midias
