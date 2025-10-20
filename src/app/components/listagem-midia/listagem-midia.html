@@ -10,4 +10,12 @@
     }
   </div>
   }
+
+  <!-- Paginação -->
+  @if (paginasDisponiveis$ | async; as paginasDisponiveis) {
+  <app-botoes-paginacao
+    [paginasDisponiveis]="paginasDisponiveis"
+    (paginaRequisitada)="paginaSubject$.next($event)"
+  ></app-botoes-paginacao>
+  }
 </div>

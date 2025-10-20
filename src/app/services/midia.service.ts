@@ -20,8 +20,13 @@ export class MidiaService {
   private readonly domSanitizer = inject(DomSanitizer);
   private readonly urlBase: string = 'https://api.themoviedb.org/3';
 
-  public selecionarMidiasPopulares(tipo: TipoMidia): Observable<MidiaApiResponse> {
-    const urlCompleto = `${this.urlBase}/${traduzirTipoMidia(tipo)}/popular?language=pt-BR`;
+  public selecionarMidiasPopulares(
+    tipo: TipoMidia,
+    pagina: number = 1
+  ): Observable<MidiaApiResponse> {
+    const urlCompleto = `${this.urlBase}/${traduzirTipoMidia(
+      tipo
+    )}/popular?page=${pagina}&language=pt-BR`;
 
     return this.http
       .get<MidiaApiResponse>(urlCompleto, {
@@ -32,8 +37,13 @@ export class MidiaService {
       .pipe(map((res) => this.mapearMidia(res, tipo)));
   }
 
-  public selecionarMidiasMaisVotadas(tipo: TipoMidia): Observable<MidiaApiResponse> {
-    const urlCompleto = `${this.urlBase}/${traduzirTipoMidia(tipo)}/top_rated?language=pt-BR`;
+  public selecionarMidiasMaisVotadas(
+    tipo: TipoMidia,
+    pagina: number = 1
+  ): Observable<MidiaApiResponse> {
+    const urlCompleto = `${this.urlBase}/${traduzirTipoMidia(
+      tipo
+    )}/top_rated?page=${pagina}&language=pt-BR`;
 
     return this.http
       .get<MidiaApiResponse>(urlCompleto, {
@@ -44,8 +54,8 @@ export class MidiaService {
       .pipe(map((res) => this.mapearMidia(res, tipo)));
   }
 
-  public selecionarFilmesEmCartaz(): Observable<MidiaApiResponse> {
-    const urlCompleto = `${this.urlBase}/movie/now_playing?language=pt-BR`;
+  public selecionarFilmesEmCartaz(pagina: number = 1): Observable<MidiaApiResponse> {
+    const urlCompleto = `${this.urlBase}/movie/now_playing?page=${pagina}&language=pt-BR`;
 
     return this.http
       .get<MidiaApiResponse>(urlCompleto, {

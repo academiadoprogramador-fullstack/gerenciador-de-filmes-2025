@@ -1,16 +1,17 @@
 import { BehaviorSubject, combineLatest, filter, map, shareReplay, switchMap } from 'rxjs';
 
-import { AsyncPipe, NgClass } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { TipoMidia } from '../../models/tipo-midia';
 import { MidiaService } from '../../services/midia.service';
+import { BotoesPaginacao } from '../shared/botoes-paginacao/botoes-paginacao';
 import { CardMidia } from '../shared/card-midia/card-midia';
 
 @Component({
   selector: 'app-busca',
-  imports: [AsyncPipe, CardMidia, NgClass],
+  imports: [AsyncPipe, CardMidia, BotoesPaginacao],
   templateUrl: './busca.html',
 })
 export class Busca {

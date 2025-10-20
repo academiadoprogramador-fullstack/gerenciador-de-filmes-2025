@@ -25,21 +25,13 @@
     </div>
     }
   </div>
-  } @if (paginasDisponiveis$ | async; as paginasDisponiveis) {
-  <section id="paginacao" class="row justify-content-center gap-2 mt-2 g-2">
-    @for (pagina of paginasDisponiveis.paginas; track $index) {
-    <button
-      style="min-width: 33px"
-      class="col-auto btn btn-sm rounded-circle"
-      (click)="paginaSubject$.next(pagina)"
-      [ngClass]="{
-        'btn-outline-primary': paginasDisponiveis.paginaAtual !== pagina,
-        'btn-primary': paginasDisponiveis.paginaAtual === pagina
-      }"
-    >
-      {{ pagina }}
-    </button>
-    }
-  </section>
+  }
+
+  <!-- Paginação -->
+  @if (paginasDisponiveis$ | async; as paginasDisponiveis) {
+  <app-botoes-paginacao
+    [paginasDisponiveis]="paginasDisponiveis"
+    (paginaRequisitada)="paginaSubject$.next($event)"
+  ></app-botoes-paginacao>
   }
 </div>
