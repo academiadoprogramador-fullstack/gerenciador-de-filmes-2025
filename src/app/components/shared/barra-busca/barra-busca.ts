@@ -12,7 +12,7 @@ export class BarraBusca {
   @Output() protected readonly buscar = new EventEmitter<string>();
 
   public onSearch(): void {
-    if (!this.inputBusca || this.inputBusca !== '') return;
+    if (!this.inputBusca || this.inputBusca === '') return;
 
     this.buscar.emit(this.inputBusca);
 

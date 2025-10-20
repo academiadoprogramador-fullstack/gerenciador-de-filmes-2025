@@ -7,7 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from '../../environments/environment';
 import { CreditosMidiaApiResponse } from '../models/creditos-midia-api-response';
 import { DetalhesMidia } from '../models/detalhes-midia';
-import { MidiaApiResponse } from '../models/midia-api-response';
+import { MidiaApiResponse, ResultadoBuscaApiResponse } from '../models/midia-api-response';
 import { TipoMidia } from '../models/tipo-midia';
 import { VideosMidiaApiResponse } from '../models/videos-midia-api-response';
 import { traduzirTipoMidia } from '../util/traduzir-tipo-midia';
@@ -100,6 +100,31 @@ export class MidiaService {
         },
       })
       .pipe(map(this.mapearCreditosMidia));
+  }
+
+  public buscarMidias(query: string): Observable<ResultadoBuscaApiResponse> {
+    const urlCompleto = `https://api.themoviedb.org/3/search/multi?query=${query}&language=pt-BR`;
+
+    return this.http
+      .get<ResultadoBuscaApiResponse>(urlCompleto, {
+        headers: {
+          Authorization: environment.apiKey,
+        },
+      })
+      .pipe(map((res) => this.mapearMidiaResultadoBusca(res)));
+  }
+
+  private mapearMidiaResultadoBusca(x: ResultadoBuscaApiResponse): ResultadoBuscaApiResponse {
+    return {
+      ...x,
+      results: x.results.map((y) => ({
+        ...y,
+        media_type: (y.media_type.toString() === 'movie' ? 'filme' : 'tv') as TipoMidia,
+        vote_average: y.vote_average * 10,
+        poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,
+        backdrop_path: 'https://image.tmdb.org/t/p/original' + y.backdrop_path,
+      })),
+    };
   }
 
   private mapearMidia(x: MidiaApiResponse, tipo: TipoMidia): MidiaApiResponse {
