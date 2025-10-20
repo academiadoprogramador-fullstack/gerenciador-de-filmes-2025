@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TipoColecaoMidia } from '../../models/tipo-colecao-midia';
 import { TipoMidia } from '../../models/tipo-midia';
 import { MidiaService } from '../../services/midia.service';
+import { mapearDadosPaginacao } from '../../util/mapear-dados-paginacao';
 import { BotoesPaginacao } from '../shared/botoes-paginacao/botoes-paginacao';
 import { CardMidia } from '../shared/card-midia/card-midia';
 
@@ -66,13 +67,5 @@ export class ListagemMidia {
     })
   );
 
-  protected readonly paginasDisponiveis$ = this.midiasSelecionadas$.pipe(
-    map((res) => {
-      return {
-        paginaAtual: res.page,
-        totalPaginas: res.total_pages,
-        paginas: Array.from({ length: res.total_pages }, (_, i) => i + 1),
-      };
-    })
-  );
+  protected readonly paginasDisponiveis$ = this.midiasSelecionadas$.pipe(map(mapearDadosPaginacao));
 }
