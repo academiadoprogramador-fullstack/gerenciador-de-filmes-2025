@@ -102,8 +102,8 @@ export class MidiaService {
       .pipe(map(this.mapearCreditosMidia));
   }
 
-  public buscarMidias(query: string): Observable<ResultadoBuscaApiResponse> {
-    const urlCompleto = `https://api.themoviedb.org/3/search/multi?query=${query}&language=pt-BR`;
+  public buscarMidias(query: string, pagina: number = 1): Observable<ResultadoBuscaApiResponse> {
+    const urlCompleto = `https://api.themoviedb.org/3/search/multi?query=${query}&page=${pagina}&language=pt-BR`;
 
     return this.http
       .get<ResultadoBuscaApiResponse>(urlCompleto, {
@@ -121,7 +121,9 @@ export class MidiaService {
         ...y,
         media_type: (y.media_type.toString() === 'movie' ? 'filme' : 'tv') as TipoMidia,
         vote_average: y.vote_average * 10,
-        poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,
+        poster_path: y.poster_path
+          ? 'https://image.tmdb.org/t/p/w500' + y.poster_path
+          : '/img/placeholder-media.webp',
         backdrop_path: 'https://image.tmdb.org/t/p/original' + y.backdrop_path,
       })),
     };
@@ -134,7 +136,10 @@ export class MidiaService {
       results: x.results.map((y) => ({
         ...y,
         vote_average: y.vote_average * 10,
-        poster_path: 'https://image.tmdb.org/t/p/w500' + y.poster_path,
+
+        poster_path: y.poster_path
+          ? 'https://image.tmdb.org/t/p/w500' + y.poster_path
+          : '/img/placeholder-media.webp',
         backdrop_path: 'https://image.tmdb.org/t/p/original' + y.backdrop_path,
       })),
     };
@@ -158,7 +163,9 @@ export class MidiaService {
       ...x,
       media_type: tipo,
       vote_average: x.vote_average * 10,
-      poster_path: 'https://image.tmdb.org/t/p/w500/' + x.poster_path,
+      poster_path: x.poster_path
+        ? 'https://image.tmdb.org/t/p/w500' + x.poster_path
+        : '/img/placeholder-media.webp',
       backdrop_path: 'https://image.tmdb.org/t/p/original/' + x.backdrop_path,
     };
   }

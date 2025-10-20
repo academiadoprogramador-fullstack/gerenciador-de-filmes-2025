@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container my-4">
   <h1>Busca por "{{ queryParam$ | async }}"</h1>
 
   <h3 class="mt-4">Filmes</h3>
@@ -25,5 +25,21 @@
     </div>
     }
   </div>
+  } @if (paginasDisponiveis$ | async; as paginasDisponiveis) {
+  <section id="paginacao" class="row justify-content-center gap-2 mt-2 g-2">
+    @for (pagina of paginasDisponiveis.paginas; track $index) {
+    <button
+      style="min-width: 33px"
+      class="col-auto btn btn-sm rounded-circle"
+      (click)="paginaSubject$.next(pagina)"
+      [ngClass]="{
+        'btn-outline-primary': paginasDisponiveis.paginaAtual !== pagina,
+        'btn-primary': paginasDisponiveis.paginaAtual === pagina
+      }"
+    >
+      {{ pagina }}
+    </button>
+    }
+  </section>
   }
 </div>
