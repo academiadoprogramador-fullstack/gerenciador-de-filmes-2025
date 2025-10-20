@@ -9,7 +9,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     <button
       style="min-width: 33px"
       class="col-auto btn btn-sm rounded-circle"
-      (click)="paginaRequisitada.next(pagina)"
+      (click)="paginaRequisitada.emit(pagina)"
       [ngClass]="{
         'btn-outline-primary': paginasDisponiveis?.paginaAtual !== pagina,
         'btn-primary': paginasDisponiveis?.paginaAtual === pagina
