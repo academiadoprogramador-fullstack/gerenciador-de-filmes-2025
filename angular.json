@@ -39,6 +39,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "outputPath": "dist/gerenciador-de-filmes-2025",
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
@@ -48,9 +49,7 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "scripts": ["bootstrap/dist/js/bootstrap.bundle.min.js"]
           },
           "configurations": {
@@ -109,9 +108,16 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ]
+            "styles": ["src/styles.scss"]
+          }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "baseHref": "https://academiadoprogramador-fullstack.github.io/gerenciador-de-filmes-2025/",
+            "repo": "https://github.com/academiadoprogramador-fullstack/gerenciador-de-filmes-2025",
+            "name": "Tiago Santini",
+            "email": "tiagosantiniathayde@outlook.com"
           }
         }
       }
