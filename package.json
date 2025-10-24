@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && copy dist\\gerenciador-de-filmes-2025\\browser\\index.html dist\\gerenciador-de-filmes-2025\\browser\\404.html",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
